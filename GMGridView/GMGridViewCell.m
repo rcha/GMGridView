@@ -46,6 +46,7 @@
 @implementation GMGridViewCell
 
 @synthesize contentView = _contentView;
+@synthesize imageView = _imageView;
 @synthesize editing = _editing;
 @synthesize inShakingMode = _inShakingMode;
 @synthesize fullSize = _fullSize;
@@ -142,10 +143,17 @@
     _contentView = contentView;
     
     self.contentView.autoresizingMask = UIViewAutoresizingNone;
+    
+    
+    self.imageView = [[UIImageView alloc] initWithFrame:contentView.frame];
+    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [self.contentView addSubview:self.imageView];
+
     [self addSubview:self.contentView];
     
     [self bringSubviewToFront:self.deleteButton];
 }
+
 
 - (void)setFullSizeView:(UIView *)fullSizeView
 {
