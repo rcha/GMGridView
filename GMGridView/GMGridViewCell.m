@@ -145,7 +145,8 @@
     self.contentView.autoresizingMask = UIViewAutoresizingNone;
     
     
-    self.imageView = [[UIImageView alloc] initWithFrame:contentView.frame];
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 102.4, 72.8)];
+    [self.imageView setCenter:self.contentView.center];
     [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
     [self.contentView addSubview:self.imageView];
 
