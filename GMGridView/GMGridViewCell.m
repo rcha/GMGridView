@@ -148,6 +148,7 @@
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 102.4, 72.8)];
     [self.imageView setCenter:self.contentView.center];
     [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [self.imageView setBackgroundColor:[UIColor blackColor]];
     [self.contentView addSubview:self.imageView];
 
     [self addSubview:self.contentView];
