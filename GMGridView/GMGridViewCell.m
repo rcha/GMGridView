@@ -13,10 +13,10 @@
 //  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 //  copies of the Software, and to permit persons to whom the Software is
 //  furnished to do so, subject to the following conditions:
-// 
+//
 //  The above copyright notice and this permission notice shall be included in
 //  all copies or substantial portions of the Software.
-// 
+//
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -59,6 +59,10 @@
 @synthesize deleteButtonOffset;
 @synthesize reuseIdentifier;
 @synthesize highlighted;
+@synthesize titleLabel = _titleLabel;
+@synthesize titleString = _titleString;
+@synthesize detailLabel = _detailLabel;
+@synthesize detailString = _detailString;
 
 //////////////////////////////////////////////////////////////
 #pragma mark Constructors
@@ -71,11 +75,10 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    if ((self = [super initWithFrame:frame])) 
+    if ((self = [super initWithFrame:frame]))
     {
         self.autoresizesSubviews = !YES;
         self.editing = NO;
-        
         UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.deleteButton = deleteButton;
         [self.deleteButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -97,7 +100,7 @@
 {
     if(self.inFullSizeMode)
     {
-        CGPoint origin = CGPointMake((self.bounds.size.width - self.fullSize.width) / 2, 
+        CGPoint origin = CGPointMake((self.bounds.size.width - self.fullSize.width) / 2,
                                      (self.bounds.size.height - self.fullSize.height) / 2);
         self.fullSizeView.frame = CGRectMake(origin.x, origin.y, self.fullSize.width, self.fullSize.height);
     }
@@ -144,22 +147,65 @@
     
     self.contentView.autoresizingMask = UIViewAutoresizingNone;
     
+    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 112.4, 82.8)];
+    whiteView.backgroundColor = [UIColor whiteColor];
     
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 102.4, 72.8)];
-    [self.imageView setCenter:self.contentView.center];
+    [self.imageView setCenter:whiteView.center];
     [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
     [self.imageView setBackgroundColor:[UIColor blackColor]];
-    [self.contentView addSubview:self.imageView];
-
+    [whiteView addSubview:self.imageView];
+    
+    [self.contentView addSubview:whiteView];
+    
     [self addSubview:self.contentView];
     
     [self bringSubviewToFront:self.deleteButton];
 }
 
+- (void) setTitleString:(NSString *)titleString
+{
+    _titleString = titleString;
+    
+    [self.titleLabel removeFromSuperview];
+    
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.imageView.frame.size.height + 15, self.contentView.frame.size.width, 20)];
+    self.titleLabel.text = titleString;
+    [self.titleLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.titleLabel setBackgroundColor:[UIColor clearColor]];
+    [self.titleLabel setShadowColor:[UIColor blackColor]];
+    [self.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+    [self.titleLabel setTextAlignment:UITextAlignmentCenter];
+    [self.titleLabel setTextColor:[UIColor whiteColor]];
+    [self.titleLabel setMinimumFontSize:10.0];
+    [self.titleLabel setLineBreakMode:UILineBreakModeMiddleTruncation];
+    [self.contentView addSubview:self.titleLabel];
+}
+
+- (void) setDetailString:(NSString *)detailString
+{
+    _detailString = detailString;
+    
+    [self.detailLabel removeFromSuperview];
+    
+    self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.imageView.frame.size.height + 35, self.contentView.frame.size.width, 20)];
+    self.detailLabel.text = detailString;
+    [self.detailLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.detailLabel setBackgroundColor:[UIColor clearColor]];
+    [self.detailLabel setShadowColor:[UIColor blackColor]];
+    [self.detailLabel setShadowOffset:CGSizeMake(0, 1)];
+    [self.detailLabel setTextAlignment:UITextAlignmentCenter];
+    [self.detailLabel setTextColor:[UIColor whiteColor]];
+    [self.detailLabel setMinimumFontSize:10.0];
+    [self.detailLabel setLineBreakMode:UILineBreakModeMiddleTruncation];
+    [self.detailLabel setFont:[UIFont systemFontOfSize:12.0]];
+    [self.contentView addSubview:self.detailLabel];
+    
+}
 
 - (void)setFullSizeView:(UIView *)fullSizeView
 {
-    if ([self isInFullSizeMode]) 
+    if ([self isInFullSizeMode])
     {
         fullSizeView.frame = _fullSizeView.frame;
         fullSizeView.alpha = _fullSizeView.alpha;
@@ -216,9 +262,9 @@
 
 - (void)setDeleteButtonOffset:(CGPoint)offset
 {
-    self.deleteButton.frame = CGRectMake(offset.x, 
-                                         offset.y, 
-                                         self.deleteButton.frame.size.width, 
+    self.deleteButton.frame = CGRectMake(offset.x,
+                                         offset.y,
+                                         self.deleteButton.frame.size.width,
                                          self.deleteButton.frame.size.height);
 }
 
@@ -231,11 +277,11 @@
 {
     [self.deleteButton setImage:deleteButtonIcon forState:UIControlStateNormal];
     
-    if (deleteButtonIcon) 
+    if (deleteButtonIcon)
     {
-        self.deleteButton.frame = CGRectMake(self.deleteButton.frame.origin.x, 
-                                             self.deleteButton.frame.origin.y, 
-                                             deleteButtonIcon.size.width, 
+        self.deleteButton.frame = CGRectMake(self.deleteButton.frame.origin.x,
+                                             self.deleteButton.frame.origin.y,
+                                             deleteButtonIcon.size.width,
                                              deleteButtonIcon.size.height);
         
         [self.deleteButton setTitle:nil forState:UIControlStateNormal];
@@ -243,9 +289,9 @@
     }
     else
     {
-        self.deleteButton.frame = CGRectMake(self.deleteButton.frame.origin.x, 
-                                             self.deleteButton.frame.origin.y, 
-                                             35, 
+        self.deleteButton.frame = CGRectMake(self.deleteButton.frame.origin.x,
+                                             self.deleteButton.frame.origin.y,
+                                             35,
                                              35);
         
         [self.deleteButton setTitle:@"X" forState:UIControlStateNormal];
@@ -278,7 +324,7 @@
 
 - (void)actionDelete
 {
-    if (self.deleteBlock) 
+    if (self.deleteBlock)
     {
         self.deleteBlock(self);
     }
@@ -298,7 +344,7 @@
 
 - (void)shake:(BOOL)on
 {
-    if ((on && !self.inShakingMode) || (!on && self.inShakingMode)) 
+    if ((on && !self.inShakingMode) || (!on && self.inShakingMode))
     {
         [self.contentView shakeStatus:on];
         _inShakingMode = on;
@@ -307,7 +353,7 @@
 
 - (void)switchToFullSizeMode:(BOOL)fullSizeEnabled
 {
-    if (fullSizeEnabled) 
+    if (fullSizeEnabled)
     {
         self.fullSizeView.autoresizingMask = self.defaultFullsizeViewResizingMask;
         
@@ -320,12 +366,12 @@
         self.fullSizeView.alpha = MAX(self.fullSizeView.alpha, self.contentView.alpha);
         self.contentView.alpha  = 0;
         
-        [UIView animateWithDuration:0.3 
+        [UIView animateWithDuration:0.3
                          animations:^{
                              self.fullSizeView.alpha = 1;
                              self.fullSizeView.frame = CGRectMake(self.fullSizeView.frame.origin.x, self.fullSizeView.frame.origin.y, self.fullSize.width, self.fullSize.height);
                              self.fullSizeView.center = center;
-                         } 
+                         }
                          completion:^(BOOL finished){
                              [self setNeedsLayout];
                          }
@@ -339,11 +385,11 @@
         self.fullSizeView.alpha = 0;
         self.contentView.alpha  = 0.6;
         
-        [UIView animateWithDuration:0.3 
+        [UIView animateWithDuration:0.3
                          animations:^{
                              self.contentView.alpha  = 1;
                              self.fullSizeView.frame = self.bounds;
-                         } 
+                         }
                          completion:^(BOOL finished){
                              [self setNeedsLayout];
                          }
@@ -355,7 +401,7 @@
 {
     return; // not supported anymore - to be fixed
     
-    if (![self isInFullSizeMode]) 
+    if (![self isInFullSizeMode])
     {
         alpha = MAX(0, alpha);
         alpha = MIN(1, alpha);
