@@ -147,11 +147,10 @@
     
     self.contentView.autoresizingMask = UIViewAutoresizingNone;
     
-    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 112.4, 82.8)];
+    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake((self.frame.size.width - 112.4)/2, 0, 112.4, 82.8)];
     whiteView.backgroundColor = [UIColor whiteColor];
     
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 102.4, 72.8)];
-    [self.imageView setCenter:whiteView.center];
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 102.4, 72.8)];
     [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
     [self.imageView setBackgroundColor:[UIColor blackColor]];
     [whiteView addSubview:self.imageView];
