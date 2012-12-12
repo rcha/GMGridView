@@ -41,6 +41,7 @@
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, strong) NSString *detailString;
 @property (nonatomic, getter=isHighlighted) BOOL highlighted;
+@property (nonatomic, assign) NSInteger selectedIndex;
 
 /// Override to release custom data before cell is reused.
 - (void)prepareForReuse;
