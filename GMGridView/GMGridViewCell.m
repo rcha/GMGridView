@@ -174,10 +174,10 @@
     [self.titleLabel setBackgroundColor:[UIColor clearColor]];
     [self.titleLabel setShadowColor:[UIColor blackColor]];
     [self.titleLabel setShadowOffset:CGSizeMake(0, 1)];
-    [self.titleLabel setTextAlignment:UITextAlignmentCenter];
+    [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [self.titleLabel setTextColor:[UIColor whiteColor]];
-    [self.titleLabel setMinimumFontSize:10.0];
-    [self.titleLabel setLineBreakMode:UILineBreakModeMiddleTruncation];
+    [self.titleLabel setMinimumScaleFactor:0.5];
+    [self.titleLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
     [self.contentView addSubview:self.titleLabel];
 }
 
@@ -193,10 +193,10 @@
     [self.detailLabel setBackgroundColor:[UIColor clearColor]];
     [self.detailLabel setShadowColor:[UIColor blackColor]];
     [self.detailLabel setShadowOffset:CGSizeMake(0, 1)];
-    [self.detailLabel setTextAlignment:UITextAlignmentCenter];
+    [self.detailLabel setTextAlignment:NSTextAlignmentCenter];
     [self.detailLabel setTextColor:[UIColor whiteColor]];
-    [self.detailLabel setMinimumFontSize:10.0];
-    [self.detailLabel setLineBreakMode:UILineBreakModeMiddleTruncation];
+    [self.titleLabel setMinimumScaleFactor:0.5];
+    [self.detailLabel setLineBreakMode:NSLineBreakByTruncatingMiddle];
     [self.detailLabel setFont:[UIFont systemFontOfSize:12.0]];
     [self.contentView addSubview:self.detailLabel];
     
